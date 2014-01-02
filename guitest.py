@@ -5,8 +5,10 @@ class tasksapp_tk(Tkinter.Tk):
 	def __init__(self,parent):
 		Tkinter.Tk.__init__(self,parent)
 		self.parent=parent
+		#must always initialize your imported classes first
+		self.tasks=tasks()
 		self.initialize()
-		tasks()
+		
 	
 
 	def initialize(self):
@@ -14,34 +16,52 @@ class tasksapp_tk(Tkinter.Tk):
 		self.grid()
 		#create widgets
 		self.messageinit=Tkinter.Message(self,text="Welcome to the task app", relief=Tkinter.RAISED, width=100)
-#		self.messageinit.grid(column=1, row=0, sticky='EW')
-		self.messageinit.pack()
+		self.messageinit.grid(column=0, row=0, sticky='EW')
+#		self.messageinit.pack()
 		
 		
 		#task list
 		self.var1=Tkinter.StringVar()
 		self.message1=Tkinter.Message(self,textvariable=self.var1, relief=Tkinter.RAISED, width=100)
-#		self.message1.grid(column=2, row=2, sticky='EW')
+		self.message1.grid(column=1, row=0, sticky='EW')
 		self.var1.set("tasks?")
-		self.message1.pack()
+#		self.message1.pack()
 		
 		#entry
 		#tasks.new_t(self.entry)
+		self.label=Tkinter.Label(self, text="Task 1 Category")
 		self.entry=Tkinter.Entry(self)
 		self.var2=Tkinter.StringVar()
+		self.label.grid(column=0, row=1, sticky='EW')
+		self.entry.grid(column=1, row=1, sticky='EW')
 #		self.entry.bind("<Return>",self.OnButtonClick1)
-		self.entry.pack()
+#		self.entry.pack()
 
+		#fake button
+		self.b=Tkinter.Button(self, text="get", width=10, command=self.OnButtonP)
+		self.b.grid(column=0, row=6, sticky='EW')
+	#	self.b.pack()		
 		
+		#entry2
+		self.labelentry2=Tkinter.Label(self, text='Task 1')
+		self.entry2=Tkinter.Entry(self)
+		self.labelentry2.grid(column=0, row=2, sticky='EW')
+		self.entry2.grid(column=1, row=2, sticky='EW')
+		
+		#self.entry2.pack()
+		
+		#submit button
+		self.submit=Tkinter.Button(self, text='submit', width=10, command=self.OnButtonSubmit)
+		self.submit.grid(column=3, row=3, sticky='EW')
+		#self.submit.pack()
 		#print entry
 
-		self.message2=Tkinter.Message(self, width=10, text=self.entry.get())
-		self.message2.pack()
+		#self.message2=Tkinter.Message(self, width=10, text=self.entry.get())
+		#self.message2.grid(row=5, column=1, sticky='EW')
 		
-		
-		self.b=Tkinter.Button(self, text="get", width=10, command=self.OnButtonClick1)
 
-		self.b.pack()
+		
+		
 		
 		self.resizable(True, True)
 
@@ -53,7 +73,17 @@ class tasksapp_tk(Tkinter.Tk):
 	def OnButtonClick1(self):
 		new=self.makemessage(text=self.entry.get())
 		return new
-
+	def OnButtonSubmit(self):		
+		sub=self.tasks.new_t(self.entry.get(),self.entry2.get())
+		return sub
+	def OnButtonP(self):
+		p=self.tasks.p_t
+		pt=[]
+		for row in p:
+			p=[row]
+			print row
+		print p
+		return p
 
 if __name__=="__main__":
 	app=tasksapp_tk(None)

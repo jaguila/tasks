@@ -10,15 +10,25 @@ class tasks:
 		self.conn.commit()
 
 		
-	def new_t(self,catn):
+	def new_t(self,catn,taskn):
 #		catn=raw_input('What is the category of your task?');
 		#catn="j2"
 #		taskn=raw_input('what is your task?')
-		taskn='j'
+#		taskn='j'
 		compn='n';
 		timen=0;
 	 	self.c.execute('INSERT INTO tasks VALUES(?,?,?,?)', (catn, taskn,compn,timen))
 		self.conn.commit();
+		
+	def p_t(self):
+		self.c.execute('select * from tasks')
+		rows=c.fetchall()
+		for row in rows:
+			print rows
+		return rows
+
+		
+		
 	def poop(self):
 		print "poop"
 #		print "task %s has been created" %catn
@@ -36,7 +46,7 @@ class tasks:
 
 
 d=tasks()
-
+d
 
 #d.quest()
 #d.run()
