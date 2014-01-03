@@ -7,6 +7,7 @@ class tasks:
 		self.conn=sqlite3.connect('task4.db');
 		self.c=self.conn.cursor();
 		self.c.execute('''CREATE TABLE IF NOT EXISTS tasks (category text, task text, completed text(1), time decimal(6,2))''')
+
 		self.conn.commit()
 
 		
@@ -22,10 +23,11 @@ class tasks:
 		
 	def p_t(self):
 		self.c.execute('select * from tasks')
-		rows=c.fetchall()
+		self.table=[]
+		rows=self.c.fetchall()
 		for row in rows:
-			print rows
-		return rows
+			self.table.append(t[1])
+		return self.table
 
 		
 		

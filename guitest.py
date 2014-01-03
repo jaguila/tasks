@@ -1,5 +1,6 @@
 import Tkinter
 from tasksclass import tasks
+import sqlite3
 
 class tasksapp_tk(Tkinter.Tk):
 	def __init__(self,parent):
@@ -39,7 +40,7 @@ class tasksapp_tk(Tkinter.Tk):
 
 		#fake button
 		self.b=Tkinter.Button(self, text="get", width=10, command=self.OnButtonP)
-		self.b.grid(column=0, row=6, sticky='EW')
+		self.b.grid(column=0, row=4, sticky='EW')
 	#	self.b.pack()		
 		
 		#entry2
@@ -57,12 +58,7 @@ class tasksapp_tk(Tkinter.Tk):
 		#print entry
 
 		#self.message2=Tkinter.Message(self, width=10, text=self.entry.get())
-		#self.message2.grid(row=5, column=1, sticky='EW')
-		
-
-		
-		
-		
+		#self.message2.grid(row=5, column=1, sticky='EW')	
 		self.resizable(True, True)
 
 	def makemessage(self, **options):
@@ -77,13 +73,20 @@ class tasksapp_tk(Tkinter.Tk):
 		sub=self.tasks.new_t(self.entry.get(),self.entry2.get())
 		return sub
 	def OnButtonP(self):
-		p=self.tasks.p_t
-		pt=[]
+		conn=sqlite3.connect('task4.db')
+		conn.text_factory = str
+		c=conn.cursor()
+		c.execute('select rowid, category, task, completed, time from tasks')
+		p=c.fetchall()
+		i=5
 		for row in p:
-			p=[row]
-			print row
+			n=self.makemessage(text=row)
+			n.grid(column=0, row=i, sticky='EW')
+			i=i+1
 		print p
 		return p
+#	def listtable(self):
+#		self.table=
 
 if __name__=="__main__":
 	app=tasksapp_tk(None)
