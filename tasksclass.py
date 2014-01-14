@@ -4,7 +4,7 @@ import time
 class tasks:
 	def __init__(self):
 #		self.ques=raw_input("new tasks?(ntask), completed a task?(comp), print tasks(ptask),delete a task?(d), view not completed tasks(nc), view completed tasks(c), add timer for task(t)???")
-		self.conn=sqlite3.connect('task4.db');
+		self.conn=sqlite3.connect('task.db');
 		self.c=self.conn.cursor();
 		self.c.execute('''CREATE TABLE IF NOT EXISTS tasks (category text, task text, completed text(1), time decimal(6,2))''')
 
@@ -28,7 +28,19 @@ class tasks:
 		for row in rows:
 			self.table.append(t[1])
 		return self.table
-
+		
+			
+	def comp_t(self,rowid):
+		comp="UPDATE tasks SET completed='y' WHERE rowid= %s" % rowid
+		self.c.execute(comp);
+		self.conn.commit();
+	
+	def delete_t(self, rowid):
+		delete="DELETE FROM tasks WHERE rowid= %s" %rowid
+		self.c.execute(delete)
+		self.conn.commit();
+	
+	
 		
 		
 	def poop(self):
